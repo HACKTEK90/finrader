@@ -1,1 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FinTrack - Personal Finance Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Username Modal -->
+    <div class="modal fade" id="usernameModal" tabindex="-1" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Welcome to FinTrack</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="usernameInput" class="form-label">Enter your name to get started</label>
+                        <input type="text" class="form-control" id="usernameInput" placeholder="Your name">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="saveUsernameBtn">Continue</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
+    <!-- Main Dashboard -->
+    <div class="dashboard" id="dashboard" style="display: none;">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <h4>FinTrack</h4>
+                <div class="username-display mt-2">
+                    <i class="fas fa-user"></i>
+                    <span id="usernameDisplay">User</span>
+                </div>
+            </div>
+            <ul class="nav flex-column">
+                <li class="nav-item">
+                    <a class="nav-link active" href="#">
+                        <i class="fas fa-home me-2"></i> Dashboard
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">
+                        <i class="fas fa-wallet me-2"></i> Accounts
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">
+                        <i class="fas fa-exchange-alt me-2"></i> Transactions
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">
+                        <i class="fas fa-chart-pie me-2"></i> Budget
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">
+                        <i class="fas fa-chart-line me-2"></i> Investments
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2>Dashboard</h2>
+                <div class="dropdown">
+                    <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="timeRangeDropdown" data-bs-toggle="dropdown">
+                        Last 30 Days
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#">Last 7 Days</a></li>
+                        <li><a class="dropdown-item" href="#">Last 30 Days</a></li>
+                        <li><a class="dropdown-item" href="#">Last 90 Days</a></li>
+                        <li><a class="dropdown-item" href="#">This Year</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Summary Cards -->
+            <div class="summary-cards">
+                <div class="summary-card balance">
+                    <div class="d-flex justify-content-between align-items-start">
+                        <div>
+                            <p class="mb-1">Total Balance</p>
+                            <h3>$12,456.78</h3>
+                        </div>
+                        <i class="fas fa-wallet fa-2x opacity-50"></i>
+                    </div>
+                </div>
+                <div class="summary-card income">
+                    <div class="d-flex justify-content-between align-items-start">
+                        <div>
+                            <p class="mb-1">Income</p>
+                            <h3>$4,230.00</h3>
+                        </div>
+                        <i class="fas fa-arrow-down fa-2x opacity-50"></i>
+                    </div>
+                </div>
+                <div class="summary-card expenses">
+                    <div class="d-flex justify-content-between align-items-start">
+                        <div>
+                            <p class="mb-1">Expenses</p>
+                            <h3>$2,456.22</h3>
+                        </div>
+                        <i class="fas fa-arrow-up fa-2x opacity-50"></i>
+                    </div>
+                </div>
+                <div class="summary-card savings">
+                    <div class="d-flex justify-content-between align-items-start">
+                        <div>
+                            <p class="mb-1">Savings</p>
+                            <h3>$1,200.00</h3>
+                        </div>
+                        <i class="fas fa-piggy-bank fa-2x opacity-50"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Charts Row -->
+            <div class="row mb-4">
+                <div class="col-md-8">
+                    <div class="card h-100">
+                        <h5>Spending Overview</h5>
+                        <canvas id="spendingChart" height="250"></canvas>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card h-100">
+                        <h5>Spending by Category</h5>
+                        <canvas id="categoryChart" height="250"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Transactions -->
+            <div class="card">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h5 class="mb-0">Recent Transactions</h5>
+                    <a href="#" class="btn btn-sm btn-outline-primary">View All</a>
+                </div>
+                <div class="transaction-list">
+                    <div class="transaction-item">
+                        <div class="d-flex align-items-center">
+                            <div class="transaction-category" style="background-color: #6366f1;">
+                                <i class="fas fa-shopping-bag"></i>
+                            </div>
+                            <div class="transaction-details">
+                                <h6 class="mb-0">Amazon Purchase</h6>
+                                <small class="text-muted">Shopping • June 12</small>
+                            </div>
+                        </div>
+                        <div class="transaction-amount expense">-$89.99</div>
+                    </div>
+                    <div class="transaction-item">
+                        <div class="d-flex align-items-center">
+                            <div class="transaction-category" style="background-color: #10b981;">
+                                <i class="fas fa-money-bill-wave"></i>
+                            </div>
+                            <div class="transaction-details">
+                                <h6 class="mb-0">Salary Deposit</h6>
+                                <small class="text-muted">Income • June 10</small>
+                            </div>
+                        </div>
+                        <div class="transaction-amount income">+$3,200.00</div>
+                    </div>
+                    <div class="transaction-item">
+                        <div class="d-flex align-items-center">
+                            <div class="transaction-category" style="background-color: #f59e0b;">
+                                <i class="fas fa-utensils"></i>
+                            </div>
+                            <div class="transaction-details">
+                                <h6 class="mb-0">Dinner at Bistro</h6>
+                                <small class="text-muted">Food & Dining • June 8</small>
+                            </div>
+                        </div>
+                        <div class="transaction-amount expense">-$64.50</div>
+                    </div>
+                    <div class="transaction-item">
+                        <div class="d-flex align-items-center">
+                            <div class="transaction-category" style="background-color: #ef4444;">
+                                <i class="fas fa-car"></i>
+                            </div>
+                            <div class="transaction-details">
+                                <h6 class="mb-0">Gas Station</h6>
+                                <small class="text-muted">Transportation • June 5</small>
+                            </div>
+                        </div>
+                        <div class="transaction-amount expense">-$42.30</div>
+                    </div>
+                    <div class="transaction-item">
+                        <div class="d-flex align-items-center">
+                            <div class="transaction-category" style="background-color: #8b5cf6;">
+                                <i class="fas fa-film"></i>
+                            </div>
+                            <div class="transaction-details">
+                                <h6 class="mb-0">Netflix Subscription</h6>
+                                <small class="text-muted">Entertainment • June 1</small>
+                            </div>
+                        </div>
+                        <div class="transaction-amount expense">-$14.99</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js"></script>
+    <script src="js/script.js"></script>
+</body>
+</html>
