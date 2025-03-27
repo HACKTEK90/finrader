@@ -1,1 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Guide | AC-Finwise Docs</title>
+    <link rel="stylesheet" href="../../css/style.css">
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="../../assets/images/logo.png" alt="AC-Finwise Logo">
+            <h1>AC-Finwise Docs</h1>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="../../index.html">Home</a></li>
+                <li><a href="../getting-started/index.html">Getting Started</a></li>
+                <li><a href="dashboard.html" class="active">Features</a></li>
+                <li><a href="../api/authentication.html">API</a></li>
+            </ul>
+        </nav>
+    </header>
 
+    <div class="container">
+        <aside class="sidebar">
+            <!-- Dynamic sidebar will be loaded -->
+        </aside>
+        
+        <main class="content">
+            <h1>Dashboard Guide</h1>
+            <p class="last-updated">Last updated: March 15, 2023</p>
+            
+            <section>
+                <h2>Overview</h2>
+                <p>The AC-Finwise Dashboard provides a comprehensive view of your financial health with interactive visualizations and key metrics.</p>
+                <img src="../../assets/images/dashboard-screenshot.png" alt="Dashboard Screenshot" class="screenshot">
+            </section>
+            
+            <section>
+                <h2>Key Components</h2>
+                
+                <article>
+                    <h3>Net Worth Summary</h3>
+                    <p>Displays your total assets minus liabilities with historical trend:</p>
+                    <pre><code class="language-json">
+// Sample API response
+{
+  "net_worth": 125000,
+  "change_30d": "+8.5%",
+  "chart_data": [...]
+}
+                    </code></pre>
+                </article>
+                
+                <article>
+                    <h3>Cash Flow Analysis</h3>
+                    <p>Shows monthly income vs. expenses with categorization:</p>
+                    <div class="tip">
+                        <strong>Tip:</strong> Click on any category to drill down into transactions.
+                    </div>
+                </article>
+            </section>
+            
+            <section class="video-tutorial">
+                <h2>Video Walkthrough</h2>
+                <div class="video-container">
+                    <iframe src="../../assets/videos/dashboard-tutorial.mp4" frameborder="0" allowfullscreen></iframe>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <footer>
+        <p>&copy; 2023 AC-Finwise. All rights reserved.</p>
+    </footer>
+
+    <script src="../../js/main.js"></script>
+</body>
+</html>
